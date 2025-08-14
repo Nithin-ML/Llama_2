@@ -19,6 +19,7 @@
 # print(response)
 
 from llama_cpp import Llama
+from pytt_audio import speak
 
 # Point to your local GGUF file
 llm = Llama(
@@ -29,8 +30,7 @@ llm = Llama(
     chat_format="llama-3",
     verbose=False # important for role-based chat with Llama 3 Instruct
 )
-while True:
-    input_prompt = input("You: ")
+def llama_chat(input_prompt):
     messages = [
         {"role": "system", "content": "You are a helpful, concise assistant."},
         {"role": "user", "content": input_prompt}
@@ -42,6 +42,22 @@ while True:
         temperature=0.7,
         top_p=0.95,
     )
+   
+    return resp["choices"][0]["message"]["content"]
+# while True:
+#     input_prompt = input("You: ")
+#     messages = [
+#         {"role": "system", "content": "You are a helpful, concise assistant."},
+#         {"role": "user", "content": input_prompt}
+#     ]
 
-    assistant_text = resp["choices"][0]["message"]["content"]
-    print(f"Llama : {assistant_text}")
+#     resp = llm.create_chat_completion(
+#         messages=messages,
+#         max_tokens=500,
+#         temperature=0.7,
+#         top_p=0.95,
+#     )
+   
+#     assistant_text = resp["choices"][0]["message"]["content"]
+#     print(f"Llama : {assistant_text}")
+    # speak(assistant_text)  # Use the speak function to vocalize the response
